@@ -1,0 +1,65 @@
+<%- include('../layouts/header') %>
+
+<div class="content-wrapper">
+  <div class="container-xxl flex-grow-1 container-p-y">
+    <h4 class="fw-bold py-3 mb-4">Add New Admin</h4>
+
+    <div class="row">
+      <div class="col-xl">
+        <div class="card mb-4">
+          <div class="card-header d-flex justify-content-between align-items-center">
+            <h5 class="mb-0">Admin Registration Form</h5>
+            <a href="/view-admin" class="btn btn-secondary">View All Admins</a>
+          </div>
+          <div class="card-body">
+            
+            <form action="/insert-admin" method="post" enctype="multipart/form-data">
+              
+              <div class="mb-3">
+                <label class="form-label">Full Name</label>
+                <input type="text" class="form-control" name="name" placeholder="John Doe" required />
+              </div>
+              
+              <div class="mb-3">
+                <label class="form-label">Email</label>
+                <input type="email" class="form-control" name="email" placeholder="john.doe@gmail.com" required />
+              </div>
+              
+              <div class="mb-3">
+                <label class="form-label">Password</label>
+                <input type="password" class="form-control" name="password" placeholder="Enter password" required />
+              </div>
+
+              <% const cityList = ["Surat", "Ahmedabad", "Vadodara", "Navsari", "Mumbai", "Bardoli", "Pune", "Other"]; %>
+              <div class="mb-3 col-md-12">
+                <label class="form-label">City</label>
+                 <select name="city" id="city" class="form-select" required>
+                  <option value="" disabled selected>Select City</option>
+
+                  <% cityList.forEach((city) => { %>
+                    <option value="<%= city %>"><%= city %></option>
+                 <% }) %>
+                 </select>
+              </div>
+              
+              <div class="mb-3">
+                <label class="form-label">Phone No.</label>
+                <input type="text" class="form-control" name="phone" placeholder="9876543210" required />
+              </div>
+
+              <div class="mb-3">
+                <label class="form-label">Upload Profile Image</label>
+                <input type="file" class="form-control" name="avatar" required />
+              </div>
+              
+              <button type="submit" class="btn btn-primary">Add Admin</button>
+            
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<%- include('../layouts/footer') %>

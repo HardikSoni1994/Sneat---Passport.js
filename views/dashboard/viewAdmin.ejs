@@ -1,0 +1,57 @@
+<%- include('../layouts/header') %>
+
+<div class="content-wrapper">
+  <div class="container-xxl flex-grow-1 container-p-y">
+    
+    <h4 class="fw-bold py-3 mb-4">View All Admins</h4>
+
+    <div class="card">
+      <div class="card-header d-flex justify-content-between align-items-center">
+        <h5 class="mb-0">Admin List</h5>
+        <a href="/addAdmin" class="btn btn-primary">Add New Admin</a>
+      </div>
+      <div class="table-responsive text-nowrap">
+        <table class="table" id="myTable">
+          <thead>
+            <tr>
+              <th>Image</th>
+              <th>Admin Name</th>
+              <th>Email</th>
+              <th>City</th>
+              <th>Phone No.</th>
+              <th>Actions</th>
+            </tr>
+          </thead>
+          <tbody class="table-border-bottom-0">
+            
+            <% data.forEach((val) => { %>
+    <tr style="vertical-align: middle;">
+        <td>
+            <img src="<%= val.image ? '/uploads/' + val.image : '/assets/img/avatars/1.png' %>" alt="Avatar" class="rounded-circle" width="40" height="40" style="object-fit:cover">
+        </td>
+        <td><strong><%= val.name %></strong></td>
+        <td><%= val.email %></td>
+        <td><%= val.city %></td>
+        <td><%= val.phone %></td>
+        <td>
+            <% if (user && val._id.toString() == user._id.toString()) { %>
+                <span class="badge bg-success text-white">Current Active</span>
+            <% } else { %>
+                <a href="/edit-admin/<%= val._id %>" class="btn btn-sm btn-primary">Edit</a>
+                <a href="/delete-admin/<%= val._id %>" class="btn btn-sm btn-danger">Delete</a>
+            <% } %>
+            </td>
+    </tr>
+<% }) %>
+
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+
+
+<%- include('../layouts/footer') %>
