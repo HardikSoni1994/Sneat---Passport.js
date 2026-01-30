@@ -340,17 +340,17 @@ const updateMyProfile = async (req, res) => {
         let image = oldData.image; // Purani image default rakho
 
         if (req.file) {
-            image = req.file.path;
+            image = req.file.filename;
 
             if (oldData.image) {
-                const oldImagePath = path.join(__dirname, '..', oldData.image);
+                const oldImagePath = path.join(__dirname, '..', 'public', 'uploads', oldData.image);
                 
                 // File delete karo
                 if (fs.existsSync(oldImagePath)) {
                     fs.unlinkSync(oldImagePath);
-                    console.log("Purani photo delete ho gayi! 🗑️");
+                    console.log("Old photo deleted successfully! 🗑️");
                 } else {
-                    console.log("Purani photo file system me nahi mili.");
+                    console.log("old photo not found in System.");
                 }
             }
         }
