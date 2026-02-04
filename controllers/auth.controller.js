@@ -28,15 +28,18 @@ const loginAdmin = async (req, res) => {
 
         if (!admin) {
             console.log("Email not found!");
+            req.flash('error', 'Email not found!');
             return res.redirect('/');
         }
 
         if (admin.password != password) {
             console.log("Password wrong!");
+            req.flash('error', 'Wrong password!');
             return res.redirect('/');
         } 
 
         console.log("Login Success!");
+        req.flash('success', 'Login successful!');
         return res.redirect('/dashboard');
 
     } catch (error) {
@@ -50,6 +53,7 @@ const logout = (req, res, next) => {
         if (error) {
             return next(error);
         }
+        req.flash('success', 'Logged out successfully!');
         res.redirect('/');
     })
 };
@@ -73,6 +77,7 @@ const registerUser = async (req, res) => {
         const existingAdmin = await Admin.findOne({ email: req.body.email });
         if (existingAdmin) {
             console.log("Email already exists");
+            req.flash('error', 'Email already exists!');
             return res.redirect('/register');
         }
 
@@ -85,6 +90,7 @@ const registerUser = async (req, res) => {
         });
 
         console.log("Admin Registered Successfully! ✅");
+        req.flash('success', 'Registration successful! Please login.');
         
         // Success -> Login Page
         return res.redirect('/'); 
@@ -114,6 +120,7 @@ const sendOtp = async (req, res) => {
 
         if (!adminData) {
             console.log("Email not found in Database");
+            req.flash('error', 'Email not found!');
             return res.redirect('/forget-password');
         }
 
@@ -183,11 +190,13 @@ const verifyOtp = async (req, res) => {
         if (userEnteredOtp == savedOTP) {
             
             console.log("OTP Match! ✅");
+            req.flash('success', 'OTP verified successfully!');
             res.render('auth/resetPassword', { email: email }); 
             
         } else {
             console.log("Wrong OTP! ❌");
-            res.send("<h1>Wrong OTP! Try Again.</h1>");
+            req.flash('error', 'Wrong OTP! Try again.');
+            return res.redirect('/forget-password');
         }
 
     } catch (error) {
@@ -203,6 +212,7 @@ const updatePassword = async (req, res) => {
         // 1. Check karo ki password same hain ya nahi
         if (newPassword !== confirmPassword) {
             console.log("Passwords does not match.. ❌");
+            req.flash('error', 'Passwords do not match!');
             return res.redirect('back');
         }
 
@@ -210,6 +220,7 @@ const updatePassword = async (req, res) => {
         await Admin.findOneAndUpdate({ email: email }, { password: newPassword });
 
         console.log("Password Changed Successfully! 🎉");
+        req.flash('success', 'Password changed successfully! Please login.');
         
         // 3. Wapis Login Page par bhej do
         res.redirect('/'); 

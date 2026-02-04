@@ -36,6 +36,9 @@
     <link rel="stylesheet" href="/assets/vendor/libs/perfect-scrollbar/perfect-scrollbar.css" />
 
     <link rel="stylesheet" href="/assets/vendor/css/pages/page-auth.css" />
+    
+    <!-- Toastify CSS -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/toastify-js@1.12.0/src/toastify.min.css">
 
     <script src="/assets/vendor/js/helpers.js"></script>
     <script src="/assets/js/config.js"></script>
@@ -108,5 +111,88 @@
     <script src="/assets/vendor/libs/perfect-scrollbar/perfect-scrollbar.js"></script>
     <script src="/assets/vendor/js/menu.js"></script>
     <script src="/assets/js/main.js"></script>
+    
+    <!-- Toastify JS -->
+    <script src="https://cdn.jsdelivr.net/npm/toastify-js@1.12.0/src/toastify.min.js"></script>
+    
+    <!-- Custom Toast Styles -->
+    <style>
+        .toastify {
+            font-family: 'Public Sans', sans-serif !important;
+            border-radius: 12px !important;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.12) !important;
+            backdrop-filter: blur(10px) !important;
+            border: 1px solid rgba(255, 255, 255, 0.2) !important;
+            font-weight: 500 !important;
+            font-size: 14px !important;
+            padding: 16px 20px !important;
+            min-width: 300px !important;
+            animation: slideInRight 0.4s ease-out !important;
+        }
+        
+        @keyframes slideInRight {
+            from {
+                transform: translateX(100%);
+                opacity: 0;
+            }
+            to {
+                transform: translateX(0);
+                opacity: 1;
+            }
+        }
+    </style>
+    
+    <!-- Flash Messages Script -->
+    <% if (locals.flash && flash.success && flash.success.length > 0) { %>
+    <script>
+        Toastify({
+            text: "✅ <%= flash.success[0] %>",
+            duration: 4000,
+            gravity: "top",
+            position: "right",
+            stopOnFocus: true,
+            style: {
+                background: "linear-gradient(135deg, #4facfe 0%, #00f2fe 100%)",
+                borderRadius: "12px",
+                boxShadow: "0 8px 32px rgba(79, 172, 254, 0.3)",
+                border: "1px solid rgba(255, 255, 255, 0.3)",
+                backdropFilter: "blur(10px)",
+                fontFamily: "'Public Sans', sans-serif",
+                fontWeight: "600",
+                fontSize: "14px",
+                padding: "16px 20px",
+                minWidth: "320px",
+                textAlign: "left"
+            },
+            onClick: function(){}
+        }).showToast();
+    </script>
+    <% } %>
+    
+    <% if (locals.flash && flash.error && flash.error.length > 0) { %>
+    <script>
+        Toastify({
+            text: "❌ <%= flash.error[0] %>",
+            duration: 4000,
+            gravity: "top",
+            position: "right",
+            stopOnFocus: true,
+            style: {
+                background: "linear-gradient(135deg, #fa709a 0%, #fee140 100%)",
+                borderRadius: "12px",
+                boxShadow: "0 8px 32px rgba(250, 112, 154, 0.3)",
+                border: "1px solid rgba(255, 255, 255, 0.3)",
+                backdropFilter: "blur(10px)",
+                fontFamily: "'Public Sans', sans-serif",
+                fontWeight: "600",
+                fontSize: "14px",
+                padding: "16px 20px",
+                minWidth: "320px",
+                textAlign: "left"
+            },
+            onClick: function(){}
+        }).showToast();
+    </script>
+    <% } %>
   </body>
 </html>

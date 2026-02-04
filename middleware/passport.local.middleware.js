@@ -16,11 +16,11 @@ passport.use(new localStrategy ({
 
         if (!admin) {
             console.log("Error: Admin not Found.");
-            return done(null, false);
+            return done(null, false, { message: 'Email not found!' });
         }
         if (admin.password != password) {
             console.log("Error: Password is incorrect.");
-            return done(null, false);
+            return done(null, false, { message: 'Wrong password!' });
         }
         return done(null, admin);
     } catch (error) {

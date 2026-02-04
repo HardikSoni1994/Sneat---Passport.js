@@ -35,6 +35,7 @@ const insertAdmin = async (req, res) => {
         });
 
         console.log("Admin Data Added Successfully! ✅");
+        req.flash('success', 'Admin added successfully!');
         return res.redirect('/view-admin'); 
 
     } catch (error) {
@@ -74,9 +75,11 @@ const deleteAdmin = async (req, res) => {
             await Admin.findByIdAndDelete(id);
             
             console.log("Admin Record Deleted Successfully! ✅");
+            req.flash('success', 'Admin deleted successfully!');
             res.redirect('/view-admin');
         } else {
             console.log("Admin record nahi mila");
+            req.flash('error', 'Admin not found!');
             res.redirect('/view-admin');
         }
 
@@ -106,6 +109,7 @@ const updateAdmin = async (req, res) => {
 
         if (!oldData) {
             console.log("Record not found");
+            req.flash('error', 'Admin not found!');
             return res.redirect('/view-admin');
         }
 
@@ -136,6 +140,7 @@ const updateAdmin = async (req, res) => {
         });
 
         console.log("Admin Data Updated Successfully! ✅");
+        req.flash('success', 'Admin updated successfully!');
         res.redirect('/view-admin');
 
     } catch (error) {
@@ -166,6 +171,7 @@ const insertUser = async (req, res) => {
         });
 
         console.log("User Added Successfully! ✅");
+        req.flash('success', 'User added successfully!');
         res.redirect('/view-user'); 
 
     } catch (error) {
@@ -207,9 +213,11 @@ const deleteUser = async (req, res) => {
             await User.findByIdAndDelete(id);
             
             console.log("User Deleted Successfully! ✅");
+            req.flash('success', 'User deleted successfully!');
             res.redirect('/view-user');
         } else {
             console.log("User not found");
+            req.flash('error', 'User not found!');
             res.redirect('/view-user');
         }
 
@@ -260,6 +268,7 @@ const updateUser = async (req, res) => {
         });
 
         console.log("User Updated Successfully! ✅");
+        req.flash('success', 'User updated successfully!');
         res.redirect('/view-user');
 
     } catch (error) {
@@ -289,20 +298,24 @@ const changePassword = async (req, res) => {
                     await Admin.findByIdAndUpdate(dataBaseAdmin._id, { password: newPassword });
                     
                     console.log("Password Changed Successfully! 🥳");
+                    req.flash('success', 'Password changed successfully!');
                     return res.redirect('/dashboard');
 
                 } else {
                     console.log("New Password and Confirm Password do not match! ❌");
+                    req.flash('error', 'New Password and Confirm Password do not match!');
                     return res.redirect('/change-password');
                 }
 
             } else {
                 console.log("New Password cannot be same as Old Password! ⚠️");
+                req.flash('error', 'New Password cannot be same as Old Password!');
                 return res.redirect('/change-password');
             };
 
         } else {
             console.log("Current Password is Wrong! ❌");
+            req.flash('error', 'Current Password is Wrong!');
             return res.redirect('/change-password');
         }
 
@@ -366,6 +379,7 @@ const updateMyProfile = async (req, res) => {
         });
 
         console.log("Profile Updated Successfully! ✅");
+        req.flash('success', 'Profile updated successfully!');
         
         return res.redirect('/my-profile');
 

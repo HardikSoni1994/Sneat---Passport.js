@@ -10,10 +10,12 @@ const upload = require('../middleware/multer.middleware');
 // Login Routes
 router.get('/', authController.loginPage);        // Login Page
 router.post('/login', passport.authenticate('local', {
-    failureRedirect: '/'
+    failureRedirect: '/',
+    failureFlash: 'Invalid email or password!'
 }),
 (req, res) => {
     console.log("Login Successfully via Passport! 🚀");
+    req.flash('success', 'Welcome back!');
     res.redirect('/dashboard');
 }); // Login Action
 

@@ -5,11 +5,11 @@ const path = require('path');
 const session = require('express-session');
 const passport = require('passport');
 const passportLocal = require('./middleware/passport.local.middleware');
-
+const flash = require('connect-flash');
+const { setFlash } = require('./middleware/connectFlash.middleware');
 const app = express();  // Express ka App object banaya..
 
 const PORT = 3000;      // port number define kiya..
-
 app.set('view engine', 'ejs');   // step-2
 
 // call middleware
@@ -28,11 +28,13 @@ app.use(session({
     }
 }));
 
+app.use(flash());
+
 // passport Initialization
 app.use(passport.initialize());
 app.use(passport.session());
-
 app.use(passport.setAuthenticatedUser);
+app.use(setFlash);
 
 // Routes use karo
 app.use('/', require('./routes/auth.route'));      // <-- Login ke liye (Sabse pehle check karega)
