@@ -7,16 +7,6 @@ const upload = require('../middleware/multer.middleware');
 // Controller import kiya
 const dashboardController = require('../controllers/dashboard.controller');
 
-
-// const isLogin = (req, res, next) => {
-//     if(req.cookies.adminData) {
-//         next();
-//     } else {
-//         res.redirect('/');
-//     }
-// };
-
-
 // Admin route
 router.get('/', dashboardController.dashboardPage);
 router.get('/dashboard', passport.checkAuthentication, dashboardController.dashboardPage);

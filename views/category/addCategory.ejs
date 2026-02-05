@@ -1,0 +1,43 @@
+<%- include('../layouts/header') %>
+
+<div class="content-wrapper">
+  <div class="container-xxl flex-grow-1 container-p-y">
+    <h4 class="fw-bold py-3 mb-4">Add Category</h4>
+
+    <div class="row">
+      <div class="col-xl">
+        <div class="card mb-4">
+          <div class="card-header d-flex justify-content-between align-items-center">
+            <h5 class="mb-0">Add New Category</h5>
+            <a href="/category/viewCategory" class="btn btn-secondary">View Categories</a>
+          </div>
+          <div class="card-body">
+            <form action="/category/insertCategory" method="post" enctype="multipart/form-data" >
+              <div class="mb-3">
+                <label class="form-label">Category Name</label>
+                <input type="text" class="form-control" name="category_name" placeholder="Enter Category Name" required />
+              </div>
+              <div class="mb-3">
+                <label class="form-label">Model No.</label>
+                <input type="text" class="form-control" name="category_model" placeholder="E.g. A2849" required />
+              </div>
+              <div class="mb-3">
+                <label class="form-label">Price</label>
+                <input type="text" class="form-control" name="category_price" placeholder="E.g. $999" required />
+              </div>
+
+              <div class="mb-3">
+                <label class="form-label">Category Image</label>
+                <input type="file" class="form-control" name="category_image" required />
+              </div>
+
+              <button type="submit" class="btn btn-primary"> Add Category </button>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<%- include('../layouts/footer') %>
