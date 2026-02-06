@@ -36,7 +36,7 @@ const insertCategory = async (req, res) => {
             status: true
         });
 
-        req.flash('success', "Product Added Successfully !!");
+        req.flash('success', "Category Added Successfully !!");
         return res.redirect('/category/viewCategory');
         
     } catch (error) {
