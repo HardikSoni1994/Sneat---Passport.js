@@ -15,10 +15,8 @@
         <table class="table">
          <thead>
             <tr>
-                <th>Image</th>
-                <th>Name</th>
-                <th>Model</th>
-                <th>Price</th>
+                <th>Category Image</th>
+                <th>Category Name</th>
                 <th>Action</th>
             </tr>
 </thead>
@@ -28,15 +26,9 @@
       <td>
         <img src="/uploads/categories/<%= item.category_image %>" width="50" height="50" alt="img" style="border-radius: 50%; object-fit: cover;">
       </td>
-      <td><strong><%= item.category_name %></strong></td>
-      <td><%= item.category_model %></td>
-      <td>$<%= item.category_price %></td>
-
-      
-
-      
-      
-
+      <td>
+        <strong><%= item.category_name %></strong>
+      </td>
       <td>
         <a href="/category/editCategory/<%= item._id %>" class="btn btn-primary btn-sm me-1 text-white">Edit</a>
         <a href="/category/deleteCategory/<%= item._id %>" class="btn btn-danger btn-sm text-white">Delete<a>

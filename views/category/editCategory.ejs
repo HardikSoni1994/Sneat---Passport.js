@@ -1,0 +1,43 @@
+<%- include('../layouts/header') %>
+
+<div class="content-wrapper">
+  <div class="container-xxl flex-grow-1 container-p-y">
+    <h4 class="fw-bold py-3 mb-4">Edit Category</h4>
+
+    <div class="row">
+      <div class="col-xl">
+        <div class="card mb-4">
+          <div class="card-header d-flex justify-content-between align-items-center">
+            <h5 class="mb-0">Edit Category Details</h5>
+            <a href="/category/viewCategory" class="btn btn-secondary">Back</a>
+          </div>
+          <div class="card-body">
+            
+            <form action="/category/updateCategory" method="post" enctype="multipart/form-data">
+              
+              <input type="hidden" name="id" value="<%= data.id %>">
+
+              <div class="mb-3">
+                <label class="form-label">Category Name</label>
+                <input type="text" class="form-control" name="category_name" value="<%= data.category_name %>" required />
+              </div>
+
+              <div class="mb-3">
+                <label class="form-label">Category Image</label>
+                <br>
+                <img src="/uploads/categories/<%= data.category_image %>" width="100" class="mb-2" alt="old-img">
+                
+                <input type="file" class="form-control" name="category_image" />
+              </div>
+              
+              <button type="submit" class="btn btn-warning">Update Category</button>
+            
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<%- include('../layouts/footer') %>

@@ -11,19 +11,19 @@ const dashboardController = require('../controllers/dashboard.controller');
 router.get('/', dashboardController.dashboardPage);
 router.get('/dashboard', passport.checkAuthentication, dashboardController.dashboardPage);
 router.get('/addAdmin', passport.checkAuthentication, dashboardController.addAdminPage);
-router.post('/insert-admin', upload.single('avatar'), dashboardController.insertAdmin);
+router.post('/insert-admin', upload.single('admin_image'), dashboardController.insertAdmin);
 router.get('/view-admin', passport.checkAuthentication, dashboardController.viewAdminPage);
 router.get('/delete-admin/:id', dashboardController.deleteAdmin);
 router.get('/edit-admin/:id', passport.checkAuthentication, dashboardController.editAdminPage);
-router.post('/update-admin', upload.single('avatar'), dashboardController.updateAdmin);
+router.post('/update-admin', upload.single('admin_image'), dashboardController.updateAdmin);
 
 // User route
 router.get('/addUser', passport.checkAuthentication, dashboardController.addUserPage);
-router.post('/insert-user', upload.single('avatar'), dashboardController.insertUser);
+router.post('/insert-user', upload.single('user_image'), dashboardController.insertUser);
 router.get('/view-user', passport.checkAuthentication, dashboardController.viewUserPage);
 router.get('/delete-user/:id', dashboardController.deleteUser);
 router.get('/edit-user/:id', passport.checkAuthentication, dashboardController.editUserPage);
-router.post('/update-user', upload.single('avatar'), dashboardController.updateUser);
+router.post('/update-user', upload.single('user_image'), dashboardController.updateUser);
 
 // Change Password Routes (Protected by isLogin)
 router.get('/change-password', passport.checkAuthentication, dashboardController.changePasswordPage);
@@ -31,6 +31,6 @@ router.post('/change-password', passport.checkAuthentication, dashboardControlle
 
 // my Profile Routes
 router.get('/my-profile', passport.checkAuthentication, dashboardController.myProfilePage);
-router.post('/update-my-profile', upload.single('image'), dashboardController.updateMyProfile); 
+router.post('/update-my-profile', upload.single('admin_image'), dashboardController.updateMyProfile); 
 
 module.exports = router;

@@ -62,7 +62,7 @@ const deleteAdmin = async (req, res) => {
 
         if (data) {
 
-            const image = path.join('public/uploads', data.image);
+            const image = path.join('public/uploads/admins', data.image);
 
             fs.unlink(image, (error) => {
                 if (error) {
@@ -118,7 +118,7 @@ const updateAdmin = async (req, res) => {
         if (req.file) {
             image = req.file.filename;
 
-            const oldImage = path.join('public/uploads', oldData.image);
+            const oldImage = path.join('public/uploads/admins', oldData.image);
 
             fs.unlink(oldImage, (error) => {
                 if (error) {
@@ -198,7 +198,7 @@ const deleteUser = async (req, res) => {
 
         if (data) {
 
-            const image = path.join('public/uploads', data.user_image);
+            const image = path.join('public/uploads/users', data.user_image);
             
             fs.unlink(image, (err) => {
                 if (err) {
@@ -249,7 +249,7 @@ const updateUser = async (req, res) => {
         if (req.file) {
             image = req.file.filename;
 
-            const oldImage = path.join('public/uploads', oldData.user_image);
+            const oldImage = path.join('public/uploads/users', oldData.user_image);
             
             fs.unlink(oldImage, (err) => {
                 if (err) console.log("Old user Image Deletion failed..:", err);
@@ -344,48 +344,53 @@ const myProfilePage = async (req, res) => {
 // Update My Profile Logic
 const updateMyProfile = async (req, res) => {
     try {
-        const id = req.user._id; 
-        
-        const { name, email, phone, city } = req.body;
+        const { id, name, email, password, city, phone } = req.body;
 
         const oldData = await Admin.findById(id);
-        
-        let image = oldData.image; // Purani image default rakho
+
+        if (!oldData) {
+            console.log("Admin profile not found");
+            return res.redirect('back');
+        }
+
+        let image = oldData.image;
 
         if (req.file) {
             image = req.file.filename;
+            const oldImagePath = path.join('public/uploads/admins', oldData.image);
 
-            if (oldData.image) {
-                const oldImagePath = path.join(__dirname, '..', 'public', 'uploads', oldData.image);
-                
-                // File delete karo
-                if (fs.existsSync(oldImagePath)) {
-                    fs.unlinkSync(oldImagePath);
-                    console.log("Old photo deleted successfully! 🗑️");
+            fs.unlink(oldImagePath, (error) => {
+                if (error) {
+                    console.log("Old Profile Image Deletion failed..", error);
                 } else {
-                    console.log("old photo not found in System.");
+                    console.log("Old Profile Image Deleted Successfully! 🗑️");
                 }
-            }
+            });
         }
-        
 
-        // 3. Database Update karo
+        // 2. Database Update
         await Admin.findByIdAndUpdate(id, {
             name: name,
             email: email,
-            phone: phone,
+            password: password,
             city: city,
+            phone: phone,
             image: image
         });
 
         console.log("Profile Updated Successfully! ✅");
-        req.flash('success', 'Profile updated successfully!');
-        
-        return res.redirect('/my-profile');
 
+        if (req.user) {
+            req.user.image = image;
+            req.user.name = name;
+        }
+
+        req.flash('success', "Profile Updated Successfully !!");
+        return res.redirect('back');
+        
     } catch (error) {
-        console.log("Update Profile Error:", error);
-        return res.redirect('/my-profile');
+        console.log(error);
+        return res.redirect('back');
     }
 }
 

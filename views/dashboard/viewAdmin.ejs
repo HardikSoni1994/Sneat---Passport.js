@@ -27,7 +27,7 @@
             <% data.forEach((val) => { %>
     <tr style="vertical-align: middle;">
         <td>
-            <img src="<%= val.image ? '/uploads/' + val.image : '/assets/img/avatars/1.png' %>" alt="Avatar" class="rounded-circle" width="40" height="40" style="object-fit:cover">
+            <img src="<%= val.image ? '/uploads/admins/' + val.image : '/assets/img/avatars/1.png' %>" alt="Avatar" class="rounded-circle" width="40" height="40" style="object-fit:cover">
         </td>
         <td><strong><%= val.name %></strong></td>
         <td><%= val.email %></td>
