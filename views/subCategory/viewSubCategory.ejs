@@ -1,0 +1,45 @@
+<%- include('../layouts/header') %>
+
+<div class="content-wrapper">
+  <div class="container-xxl flex-grow-1 container-p-y">
+    <h4 class="fw-bold py-3 mb-4"> View Sub Category</h4>
+
+    <div class="card">
+       <div class="card-header d-flex justify-content-between align-items-center">
+        <h5 class="mb-0">Category List</h5>
+        <a href="/subCategory/addSubCategory" class="btn btn-primary">Add New Sub Category</a>
+      </div>
+      <div class="table-responsive text-nowrap">
+        <table class="table">
+          <thead>
+            <tr>
+              <th style="font-weight: bold;">Sr. No.</th>
+              <th style="font-weight: bold;">Category (Parent)</th>
+              <th style="font-weight: bold;">Sub Category Name</th>
+              <th style="font-weight: bold;">Action</th>
+            </tr>
+          </thead>
+          <tbody class="table-border-bottom-0">
+            
+            <% subCategories.forEach((val, index) => { %>
+              <tr>
+                <td><%= index + 1 %></td>
+                <td>
+                    <strong><%= val.category_id ? val.category_id.category_name : 'No Category' %></strong>
+                </td>
+                <td><%= val.subCategory_name %></td>
+                <td>
+                  <a href="/subCategory/editSubCategory/<%= val._id %>" class="btn btn-sm btn-primary">Edit</a>
+                    <a href="/subCategory/deleteSubCategory/<%= val._id %>" class="btn btn-sm btn-danger">Delete</a>
+                </td>
+              </tr>
+            <% }) %>
+
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+</div>
+
+<%- include('../layouts/footer') %>

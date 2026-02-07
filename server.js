@@ -42,6 +42,7 @@ app.use(setFlash);
 app.use("/", require("./routes/auth.route")); // <-- Login ke liye (Sabse pehle check karega)
 app.use("/", require("./routes/dashboard.route")); // <-- Dashboard ke liye
 app.use("/category", require("./routes/category.route"));
+app.use('/subCategory', require("./routes/subCategory.route"));
 
 // server (PORT) start 🚀
 app.listen(PORT, (error) => {

@@ -69,9 +69,7 @@
       </ul>
     </li>
 
-    <li
-      class="menu-item <%= (page === 'addCategory' || page === 'viewCategory') ? 'active open' : '' %>"
-    >
+    <li class="menu-item <%= (page === 'addCategory' || page === 'viewCategory') ? 'active open' : '' %>" >
       <a href="javascript:void(0);" class="menu-link menu-toggle">
         <i class="menu-icon tf-icons bx bx-grid-alt"></i>
         <div data-i18n="Categories">Categories</div>
@@ -86,6 +84,25 @@
         <li class="menu-item <%= page === 'viewCategory' ? 'active' : '' %>">
           <a href="/category/viewCategory" class="menu-link">
             <div data-i18n="View Category">View category</div>
+          </a>
+        </li>
+      </ul>
+    </li>
+    <li class="menu-item <%= (page === 'addSubCategory' || page === 'viewSubCategory') ? 'active open' : '' %>" >
+      <a href="javascript:void(0);" class="menu-link menu-toggle">
+        <i class="menu-icon tf-icons bx bx-grid-alt"></i>
+        <div data-i18n="Sub Categories">Sub Categories</div>
+      </a>
+
+      <ul class="menu-sub">
+        <li class="menu-item <%= page === 'addSubCategory' ? 'active' : '' %>">
+          <a href="/subCategory/addSubCategory" class="menu-link">
+            <div data-i18n="Add Sub Category">Add Sub Category</div>
+          </a>
+        </li>
+        <li class="menu-item <%= page === 'viewSubCategory' ? 'active' : '' %>">
+          <a href="/subCategory/viewSubCategory" class="menu-link">
+            <div data-i18n="View Sub Category">View Sub Category</div>
           </a>
         </li>
       </ul>
