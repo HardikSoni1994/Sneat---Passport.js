@@ -6,10 +6,13 @@ const addSubCategoryPage = async (req, res) => {
     try {
         const categories = await Category.find({});
 
-    return res.render('subCategory/addSubCategory', { categories: categories, page: 'addSubCategory' });
+        const subCategoryOptions = [ "Smart Phones",  "Laptops",  "Smart Watches", "Televisions", "T-Shirts",  "Shirts", "Jeans", "Shoes",  "Furniture", "Kitchen" ];
+
+    return res.render('subCategory/addSubCategory', { categories: categories, subCategoryOptions: subCategoryOptions, page: 'addSubCategory' });
     } catch (error) {
         console.log(error);
-        return res.redirect('back');  
+        req.flash('error', "Something went wrong !");
+        return res.redirect('/subCategory/addSubCategory');
     }
 }
 
@@ -21,7 +24,8 @@ const viewSubCategoryPage = async (req, res) => {
         return res.render('subcategory/viewSubCategory', {subCategories: subCategories, page: 'viewSubCategory'});
     } catch (error) {
         console.log(error);
-        return res.redirect('back');
+        req.flash('error', "Something went wrong !");
+        return res.redirect('/subCategory/addSubCategory');
     }
 }
 
