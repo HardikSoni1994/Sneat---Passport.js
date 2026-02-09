@@ -36,7 +36,7 @@ const insertCategory = async (req, res) => {
             status: true
         });
 
-        req.flash('success', "Category Added Successfully !!");
+        req.flash('success', `${category_name} Category Added Successfully !!`);
         return res.redirect('/category/viewCategory');
         
     } catch (error) {
@@ -52,6 +52,11 @@ const deleteCategory = async (req, res) => {
 
         const data = await Category.findById(id);
 
+        await Category.findByIdAndDelete(id);
+
+        req.flash('success', `${data.category_name} Category Deleted Successfully !!`);
+        return res.redirect('/category/viewCategory');
+
         if (data) {
             const imagePath = path.join('public/uploads/categories', data.category_image);
 
@@ -62,12 +67,6 @@ const deleteCategory = async (req, res) => {
                     console.log("Image Deleted Successfully! 🗑️");
                 }
             });
-
-            await Category.findByIdAndDelete(id);
-
-            console.log("Category Deleted Successfully! ✅");
-            req.flash('success', "Category Deleted Successfully !!");
-            return res.redirect('/category/viewCategory');
         } else {
             console.log("Category not found");
             req.flash('error', "Category not found!");
@@ -122,16 +121,14 @@ const updateCategory = async (req, res) => {
         // Database Update
         await Category.findByIdAndUpdate(id, {
             category_name: category_name,
-            category_image: image
+            category_image: req.file.filename
         });
-
-        console.log("Category Updated Successfully! ✅");
-        req.flash('success', "Category Updated Successfully !!");
+        req.flash('success', `${category_name} Category Updated Successfully !!`);
         return res.redirect('/category/viewCategory');
         
     } catch (error) {
         console.log(error);
-        return res.redirect('back');
+        return res.redirect('/category/viewCategory');
     }
 }
 

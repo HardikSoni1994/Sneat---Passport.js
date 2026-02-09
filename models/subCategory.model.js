@@ -9,7 +9,11 @@ const subCategorySchema = mongoose.Schema({
     subCategory_name: {
         type: String,
         required: true
-    }
+    },
+    subCategory_image: {
+        type: String,
+        required: true
+    },
 });
 
 const subCategory = mongoose.model('subCategory', subCategorySchema, 'subCategory');

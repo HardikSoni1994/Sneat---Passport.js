@@ -2,43 +2,154 @@
 
 <div class="content-wrapper">
   <div class="container-xxl flex-grow-1 container-p-y">
-    <h4 class="fw-bold py-3 mb-4"> View Sub Category</h4>
-
-    <div class="card">
-       <div class="card-header d-flex justify-content-between align-items-center">
-        <h5 class="mb-0">Category List</h5>
-        <a href="/subCategory/addSubCategory" class="btn btn-primary">Add New Sub Category</a>
-      </div>
-      <div class="table-responsive text-nowrap">
-        <table class="table">
-          <thead>
-            <tr>
-              <th style="font-weight: bold;">Sr. No.</th>
-              <th style="font-weight: bold;">Category (Parent)</th>
-              <th style="font-weight: bold;">Sub Category Name</th>
-              <th style="font-weight: bold;">Action</th>
-            </tr>
-          </thead>
-          <tbody class="table-border-bottom-0">
-            
-            <% subCategories.forEach((val, index) => { %>
-              <tr>
-                <td><%= index + 1 %></td>
-                <td>
-                    <strong><%= val.category_id ? val.category_id.category_name : 'No Category' %></strong>
-                </td>
-                <td><%= val.subCategory_name %></td>
-                <td>
-                  <a href="/subCategory/editSubCategory/<%= val._id %>" class="btn btn-sm btn-primary">Edit</a>
-                    <a href="/subCategory/deleteSubCategory/<%= val._id %>" class="btn btn-sm btn-danger">Delete</a>
-                </td>
-              </tr>
-            <% }) %>
-
-          </tbody>
-        </table>
-      </div>
+    
+    <div class="d-flex justify-content-between align-items-center mb-4">
+        <h4 class="fw-bold py-3 mb-0"> View Sub Category </h4>
+        <a href="/subCategory/addSubCategory" class="btn btn-primary rounded-pill px-4 shadow-sm">
+            <i class="bx bx-plus me-1"></i> Add New Sub Category
+        </a>
     </div>
+
+    <style>
+      .cat-card {
+        border: none;
+        border-radius: 16px; /* Perfect Rounded Corners */
+        background: #fff;
+        transition: all 0.3s ease;
+        position: relative;
+        overflow: hidden;
+        box-shadow: 0 5px 15px rgba(0,0,0,0.05);
+      }
+
+      /* Image Box */
+      .cat-img-box {
+        height: 180px; 
+        width: 100%;
+        position: relative;
+        overflow: hidden;
+        background-color: #f8f9fa;
+      }
+
+      .cat-img-box img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        transition: transform 0.5s ease;
+      }
+
+      /* Content Body */
+      .card-body {
+        padding: 15px;
+        text-align: center;
+        background: #fff;
+        position: relative;
+        z-index: 2;
+      }
+
+      .cat-title {
+        font-size: 16px;
+        font-weight: 600;
+        margin-bottom: 5px; /* Thoda gap kam kiya subtitle ke liye */
+        color: #333;
+        letter-spacing: 0.3px;
+      }
+
+      .parent-cat {
+        font-size: 12px;
+        color: #888;
+        display: block;
+        margin-bottom: 12px;
+        font-weight: bold;
+        text-transform: uppercase;
+      }
+
+      /* Hover Effects */
+      .cat-card:hover {
+        transform: translateY(-8px);
+        box-shadow: 0 15px 35px rgba(105, 108, 255, 0.3);
+      }
+
+      .cat-card:hover .cat-img-box img {
+        /* transform: scale(1.1); */
+        transform: scale(1.15) rotate(2deg);
+      }
+
+      /* Buttons */
+      .btn-group-custom {
+        display: flex;
+        gap: 10px;
+        justify-content: center;
+      }
+
+      .modern-btn {
+        border-radius: 8px;
+        padding: 6px 16px;
+        font-size: 13px;
+        font-weight: 600;
+        border: none;
+        display: flex;
+        align-items: center;
+        transition: 0.3s;
+        text-decoration: none;
+      }
+
+      /* Edit (Blue) */
+      .btn-edit {
+        background: rgba(105, 108, 255, 0.12);
+        color: #696cff;
+      }
+      .btn-edit:hover {
+        background: #696cff;
+        color: white;
+        transform: translateY(-2px);
+      }
+
+      /* Drop (Red) */
+      .btn-delete {
+        background: rgba(255, 62, 29, 0.12);
+        color: #ff3e1d;
+      }
+      .btn-delete:hover {
+        background: #ff3e1d;
+        color: white;
+        transform: translateY(-2px);
+      }
+
+    </style>
+
+    <div class="row">
+      <% subCategories.forEach((item) => { %>
+        
+        <div class="col-xl-3 col-lg-3 col-md-4 col-sm-6 mb-4">
+          <div class="card cat-card h-100">
+            
+            <div class="cat-img-box">
+              <img src="/uploads/subCategories/<%= item.subCategory_image %>" alt="Sub Category">
+            </div>
+
+            <div class="card-body">
+              <h5 class="cat-title"><%= item.subCategory_name %></h5>
+              
+              <span class="parent-cat">
+                <%= item.category_id ? item.category_id.category_name : 'No Category' %>
+              </span>
+
+              <div class="btn-group-custom">
+                <a href="/subCategory/editSubCategory/<%= item._id %>" class="modern-btn btn-edit">
+                  <i class="bx bx-edit-alt me-1"></i> Edit
+                </a>
+                <a href="/subCategory/deleteSubCategory/<%= item._id %>" class="modern-btn btn-delete" >
+                  <i class="bx bx-trash me-1"></i> Delete
+                </a>
+              </div>
+
+            </div>
+          </div>
+        </div>
+
+      <% }) %>
+    </div>
+
   </div>
 </div>
 

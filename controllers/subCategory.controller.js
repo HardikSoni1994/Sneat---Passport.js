@@ -32,13 +32,18 @@ const viewSubCategoryPage = async (req, res) => {
 // insert Subcategory
 const insertSubCategory = async (req, res) => {
     try {
+        let image = "";
+        if (req.file) {
+            image = req.file.filename;
+        }
         const {category_id, subCategory_name} = req.body;
 
         await subCategory.create({
             category_id: category_id,
             subCategory_name: subCategory_name,
+            subCategory_image: image
         });
-        req.flash('success', "SubCategory Added Successfully!");
+        req.flash('success', `${subCategory_name} Added Successfully!`);
         return res.redirect('/subCategory/viewSubCategory');
         
     } catch (error) {
@@ -53,9 +58,11 @@ const deleteSubCategory = async (req, res) => {
     try {
         const id = req.params.id;
 
+        const singleSubCat = await subCategory.findById(id);
+
         await subCategory.findByIdAndDelete(id);
 
-        req.flash('success', "SubCategory Deleted Successfully!");
+        req.flash('success', `${singleSubCat.subCategory_name} Deleted Successfully!`);
         return res.redirect('/subCategory/viewSubCategory');
 
     } catch (error) {
@@ -93,18 +100,27 @@ const updateSubCategory = async (req, res) => {
     try {
         const { id, category_id, subCategory_name } = req.body;
 
-        await subCategory.findByIdAndUpdate(id, {
-            category_id: category_id,
-            subCategory_name: subCategory_name
-        });
+        if (req.file) {
+            let image = req.file.filename;
 
-        req.flash('success', "SubCategory Updated Successfully!");
+            await subCategory.findByIdAndUpdate(id, {
+            category_id: category_id,
+            subCategory_name: subCategory_name,
+            subCategory_image: req.file.filename
+        });
+        } else {
+            await subCategory.findByIdAndUpdate(id, {
+                category_id: category_id,
+                subCategory_name: subCategory_name,
+            });
+        }
+        req.flash('success', `${subCategory_name} Updated Successfully!`);
         return res.redirect('/subCategory/viewSubCategory');
 
     } catch (error) {
         console.log(error);
         req.flash('error', "Error Updating Data");
-        return res.redirect('back');
+        return res.redirect('/subCategory/viewSubCategory');
     }
 }
 
