@@ -6,7 +6,7 @@ const addSubCategoryPage = async (req, res) => {
     try {
         const categories = await Category.find({});
 
-        const subCategoryOptions = [ "Smart Phones",  "Laptops",  "Smart Watches", "Televisions", "T-Shirts",  "Shirts", "Jeans", "Shoes",  "Furniture", "Kitchen" ];
+        const subCategoryOptions = [ "Smart Phones",  "Laptops",  "Smart Watches", "Televisions", "T-Shirts",  "Shirts", "Jeans", "Shoes",  "Furniture", "Kitchen", "Hair Care", "Body & skin Care"];
 
     return res.render('subCategory/addSubCategory', { categories: categories, subCategoryOptions: subCategoryOptions, page: 'addSubCategory' });
     } catch (error) {

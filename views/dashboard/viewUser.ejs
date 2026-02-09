@@ -27,7 +27,7 @@
             <% data.map((val)=>{ %>
               <tr style="vertical-align: middle;">
                   <td>
-                      <img src="/uploads/users<%= val.user_image %>" width="50" height="50" style="border-radius: 50%; object-fit: cover;">
+                      <img src="/uploads/users/<%= val.user_image %>" width="50" height="50" style="border-radius: 50%; object-fit: cover;">
                   </td>
                   <td><strong><%= val.username %></strong></td>
                   <td><%= val.email %></td>

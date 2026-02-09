@@ -126,7 +126,7 @@ const updateCategory = async (req, res) => {
         });
 
         console.log("Category Updated Successfully! ✅");
-        req.flash('success', "Product Updated Successfully !!");
+        req.flash('success', "Category Updated Successfully !!");
         return res.redirect('/category/viewCategory');
         
     } catch (error) {
