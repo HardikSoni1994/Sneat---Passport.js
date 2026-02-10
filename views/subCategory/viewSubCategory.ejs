@@ -49,16 +49,16 @@
       .cat-title {
         font-size: 16px;
         font-weight: 600;
-        margin-bottom: 5px; /* Thoda gap kam kiya subtitle ke liye */
-        color: #333;
+        margin-bottom: 10px; /* Thoda gap kam kiya subtitle ke liye */
+        color: #888;
         letter-spacing: 0.3px;
       }
 
       .parent-cat {
         font-size: 12px;
-        color: #888;
+        color: #333;
         display: block;
-        margin-bottom: 12px;
+        margin-bottom: 6px;
         font-weight: bold;
         text-transform: uppercase;
       }
@@ -101,10 +101,11 @@
       .btn-edit:hover {
         background: #696cff;
         color: white;
-        transform: translateY(-2px);
+        transform: translateY(-3px);
+        box-shadow: 0 5px 15px rgba(105, 108, 255, 0.4);
       }
 
-      /* Drop (Red) */
+      /* Delete (Red) */
       .btn-delete {
         background: rgba(255, 62, 29, 0.12);
         color: #ff3e1d;
@@ -112,7 +113,8 @@
       .btn-delete:hover {
         background: #ff3e1d;
         color: white;
-        transform: translateY(-2px);
+        transform: translateY(-3px);
+        box-shadow: 0 5px 15px rgba(255, 62, 29, 0.4);
       }
 
     </style>
@@ -128,12 +130,10 @@
             </div>
 
             <div class="card-body">
-              <h5 class="cat-title"><%= item.subCategory_name %></h5>
-              
               <span class="parent-cat">
                 <%= item.category_id ? item.category_id.category_name : 'No Category' %>
               </span>
-
+              <h5 class="cat-title"><%= item.subCategory_name %></h5>
               <div class="btn-group-custom">
                 <a href="/subCategory/editSubCategory/<%= item._id %>" class="modern-btn btn-edit">
                   <i class="bx bx-edit-alt me-1"></i> Edit
