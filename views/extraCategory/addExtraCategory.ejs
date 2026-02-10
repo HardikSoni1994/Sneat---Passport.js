@@ -1,0 +1,52 @@
+<%- include('../layouts/header') %>
+
+<div class="content-wrapper">
+  <div class="container-xxl flex-grow-1 container-p-y">
+    <h4 class="fw-bold py-3 mb-4">Add Extra Category</h4>
+
+    <div class="row">
+      <div class="col-xl">
+        <div class="card mb-4">
+          <div class="card-header d-flex justify-content-between align-items-center">
+            <h5 class="mb-0">Create Extra Category</h5>
+          </div>
+          <div class="card-body">
+            
+            <form action="/extraCategory/insertExtraCategory" method="POST">
+
+              <div class="mb-3">
+                <label class="form-label">Select Category</label>
+                <select class="form-select" name="category_id" required>
+                  <option value="">-- Select Category --</option>
+                  <% categories.forEach((cat) => { %>
+                    <option value="<%= cat._id %>"><%= cat.category_name %></option>
+                  <% }) %>
+                </select>
+              </div>
+
+              <div class="mb-3">
+                <label class="form-label">Select Sub Category</label>
+                <select class="form-select" name="subCategory_id" required>
+                  <option value="">-- Select Sub Category --</option>
+                  <% subCategories.forEach((sub) => { %>
+                    <option value="<%= sub._id %>"><%= sub.subCategory_name %></option>
+                  <% }) %>
+                </select>
+              </div>
+
+              <div class="mb-3">
+                <label class="form-label">Extra Category Name</label>
+                <input type="text" name="extraCategory_name" class="form-control" placeholder="Ex: Canvas Shoes, V-Neck Tshirts" required />
+              </div>
+
+              <button type="submit" class="btn btn-primary">Add Extra Category</button>
+            </form>
+
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<%- include('../layouts/footer') %>

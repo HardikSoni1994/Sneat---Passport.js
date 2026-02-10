@@ -44,6 +44,7 @@ app.use("/", require("./routes/auth.route")); // <-- Login ke liye (Sabse pehle 
 app.use("/", require("./routes/dashboard.route")); // <-- Dashboard ke liye
 app.use("/category", require("./routes/category.route"));
 app.use('/subCategory', require("./routes/subCategory.route"));
+app.use('/extraCategory', require("./routes/extraCategory.route"));
 
 // server (PORT) start 🚀
 app.listen(PORT, (error) => {

@@ -107,5 +107,24 @@
         </li>
       </ul>
     </li>
+    <li class="menu-item <%= (page === 'addExtraCategory' || page === 'viewExtraCategory') ? 'active open' : '' %>" >
+      <a href="javascript:void(0);" class="menu-link menu-toggle">
+        <i class="menu-icon tf-icons bx bx-layer-plus"></i>
+        <div data-i18n="Extra Categories">Extra Categories</div>
+      </a>
+
+      <ul class="menu-sub">
+        <li class="menu-item <%= page === 'addExtraCategory' ? 'active' : '' %>">
+          <a href="/extraCategory/addExtraCategory" class="menu-link">
+            <div data-i18n="Add Extra Category">Add Extra Category</div>
+          </a>
+        </li>
+        <li class="menu-item <%= page === 'viewExtraCategory' ? 'active' : '' %>">
+          <a href="/extraCategory/viewExtraCategory" class="menu-link">
+            <div data-i18n="View Extra Category">View Extra Category</div>
+          </a>
+        </li>
+      </ul>
+    </li>
   </ul>
 </aside>
