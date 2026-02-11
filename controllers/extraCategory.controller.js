@@ -27,7 +27,7 @@ const insertExtraCategory = async (req, res) => {
         });
 
         req.flash('success', "Extra Category Added Successfully!");
-        return res.redirect('/extraCategory/addExtraCategory');
+        return res.redirect('/extraCategory/viewExtraCategory');
     } catch (error) {
         console.log(error);
         req.flash('error', "Extra category insertion failed.!");
@@ -35,4 +35,73 @@ const insertExtraCategory = async (req, res) => {
     }
 }
 
-module.exports = { addExtraCategoryPage, insertExtraCategory};
+// View Extra Category Page
+const viewExtraCategoryPage = async (req, res) => {
+    try {
+
+        const extraCategories = await extraCategory.find({})
+            .populate('category_id')
+            .populate('subCategory_id');
+
+        return res.render('extraCategory/viewExtraCategory', {
+            extraCategories: extraCategories,
+            page: 'viewExtraCategory'
+        });
+
+    } catch (error) {
+        console.log(error);
+        return res.redirect('back');
+    }
+}
+// Delete Logic
+const deleteExtraCategory = async (req, res) => {
+    try {
+        const id = req.params.id;
+        const oldData = await extraCategory.findById(id);
+        
+        await extraCategory.findByIdAndDelete(id);
+        
+        req.flash('success', `${oldData.extraCategory_name} Deleted Successfully!`);
+        return res.redirect('back');
+    } catch (error) {
+        console.log(error);
+        return res.redirect('back');
+    }
+}
+
+// Edit Logic
+const editExtraCategory = async (req, res) => {
+    try {
+        const id = req.params.id;
+        const singleData = await extraCategory.findById(id);
+        const categories = await Category.find({});
+        const subCategories = await subCategory.find({});
+
+        return res.render('extraCategory/editExtraCategory', {
+            singleData: singleData,
+            categories: categories,
+            subCategories: subCategories,
+            page: 'viewExtraCategory'
+        });
+    } catch (error) {
+        console.log(error);
+        return res.redirect('back');
+    }
+}
+
+// Update Logic
+const updateExtraCategory = async (req, res) => {
+    try {
+        const { id, category_id, subCategory_id, extraCategory_name } = req.body;
+
+        await extraCategory.findByIdAndUpdate(id, { category_id, subCategory_id, extraCategory_name });
+
+        req.flash('success', `${extraCategory_name} Updated Successfully!`);
+        return res.redirect('/extraCategory/viewExtraCategory');
+    } catch (error) {
+        console.log(error);
+        return res.redirect('back');
+    }
+}
+
+module.exports = { addExtraCategoryPage, insertExtraCategory, viewExtraCategoryPage, deleteExtraCategory, editExtraCategory, updateExtraCategory };
