@@ -2,24 +2,28 @@
 
 <div class="content-wrapper">
   <div class="container-xxl flex-grow-1 container-p-y">
-    <h4 class="fw-bold py-3 mb-4">Add Extra Category</h4>
+    <h4 class="fw-bold py-3 mb-4">Edit Extra Category</h4>
 
     <div class="row">
       <div class="col-xl">
         <div class="card mb-4">
           <div class="card-header d-flex justify-content-between align-items-center">
-            <h5 class="mb-0">Create Extra Category</h5>
+            <h5 class="mb-0">Edit Extra Category</h5>
           </div>
           <div class="card-body">
             
-            <form action="/extraCategory/insertExtraCategory" method="POST">
+            <form action="/extraCategory/updateExtraCategory" method="POST">
+                <input type="hidden" name="id" value="<%= singleData._id %>" />
 
               <div class="mb-3">
                 <label class="form-label">Select Category</label>
                 <select class="form-select" name="category_id" id="category" onchange="categoryChange()" required>
                   <option value="">-- Select Category --</option>
                   <% categories.forEach((cat) => { %>
-                    <option value="<%= cat._id %>"><%= cat.category_name %></option>
+                    <!-- <option value="<%= cat._id %>"><%= cat.category_name %></option> -->
+                     <option value="<%= cat._id %>" <%= cat._id.toString() == singleData.category_id.toString() ? 'selected' : '' %> >
+                        <%= cat.category_name %>
+                    </option>
                   <% }) %>
                 </select>
               </div>
@@ -28,15 +32,21 @@
                 <label class="form-label">Select Sub Category</label>
                 <select class="form-select" name="subCategory_id" id="subCategory" required>
                   <option value="">-- Select Sub Category --</option>
+                  <% subCategories.forEach((sub) => { %>
+                    <!-- <option value="<%= sub._id %>"><%= sub.subCategory_name %></option> -->
+                     <option value="<%= sub._id %>" <%= sub._id.toString() == singleData.subCategory_id.toString() ? 'selected' : '' %> >
+                        <%= sub.subCategory_name %>
+                    </option>
+                  <% }) %>
                 </select>
               </div>
 
               <div class="mb-3">
                 <label class="form-label">Extra Category Name</label>
-                <input type="text" name="extraCategory_name" class="form-control" placeholder="Ex: Canvas Shoes, V-Neck Tshirts" required />
+                <input type="text" name="extraCategory_name" class="form-control" value="<%= singleData.extraCategory_name %>" required />
               </div>
 
-              <button type="submit" class="btn btn-primary">Add Extra Category</button>
+              <button type="submit" class="btn btn-warning">Update Extra Category</button>
             </form>
 
           </div>
@@ -49,25 +59,32 @@
 <%- include('../layouts/footer') %>
 
 <script>
+    
     const allSubCategories = <%- JSON.stringify(subCategories) %>;
+    
+    const savedSubCatId = "<%= singleData.subCategory_id %>";
 
     function categoryChange() {
-
         const catId = document.getElementById("category").value;
         const subCatSelect = document.getElementById("subCategory");
 
-        subCatSelect.innerHTML = '<option value="">-- Select Sub Category --</option>';
-
-        // 3. FILTER LOGIC
         const filteredSubCats = allSubCategories.filter((item) => {
-            return item.category_id == catId;
+            return item.category_id == catId || item.category_id._id == catId;
         });
 
-        var subCategoryOption = '<option value="">-- Select Sub Category --</option>';
+        let subCategoryOption = '<option value="">-- Select Sub Category --</option>';
 
         filteredSubCats.map((item) => {
-        subCategoryOption += `<option value="${item._id}">${item.subCategory_name}</option>`;    
+
+            let isSelected = '';
+            if (item._id.toString() == savedSubCatId.toString()) {
+                isSelected = 'selected';
+            }
+            subCategoryOption += `<option value="${item._id}" ${isSelected}>${item.subCategory_name}</option>`;
         });
+
         subCatSelect.innerHTML = subCategoryOption;
     }
+    window.onload = categoryChange;
+
 </script>
