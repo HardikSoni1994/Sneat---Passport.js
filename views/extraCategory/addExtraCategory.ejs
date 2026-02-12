@@ -12,7 +12,7 @@
           </div>
           <div class="card-body">
             
-            <form action="/extraCategory/insertExtraCategory" method="POST">
+            <form action="/extraCategory/insertExtraCategory" method="POST" enctype="multipart/form-data">
 
               <div class="mb-3">
                 <label class="form-label">Select Category</label>
@@ -34,6 +34,11 @@
               <div class="mb-3">
                 <label class="form-label">Extra Category Name</label>
                 <input type="text" name="extraCategory_name" class="form-control" placeholder="Ex: Canvas Shoes, V-Neck Tshirts" required />
+              </div>
+
+              <div class="mb-3">
+                <label class="form-label">Extra Category Image</label>
+                <input type="file" name="extraCategory_image" class="form-control" required />
               </div>
 
               <button type="submit" class="btn btn-primary">Add Extra Category</button>

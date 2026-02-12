@@ -20,10 +20,17 @@ const insertExtraCategory = async (req, res) => {
     try {
         const { category_id, subCategory_id, extraCategory_name} = req.body;
 
+        let image = '';
+        if (req.file) {
+            image = req.file.path.replace(/\\/g, '/').replace('public/', '');
+            console.log("Image Path:", image);
+        }
+
         await extraCategory.create({
             category_id: category_id,
             subCategory_id: subCategory_id,
-            extraCategory_name: extraCategory_name
+            extraCategory_name: extraCategory_name,
+            extraCategory_image: image
         });
 
         req.flash('success', "Extra Category Added Successfully!");
@@ -42,6 +49,11 @@ const viewExtraCategoryPage = async (req, res) => {
         const extraCategories = await extraCategory.find({})
             .populate('category_id')
             .populate('subCategory_id');
+
+        console.log("Extra Categories:", extraCategories.map(item => ({
+            name: item.extraCategory_name,
+            image: item.extraCategory_image
+        })));
 
         return res.render('extraCategory/viewExtraCategory', {
             extraCategories: extraCategories,
