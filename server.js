@@ -17,7 +17,7 @@ app.use(express.urlencoded({ extended: true }));
 
 // middleware for static public & uploads
 app.use(express.static(path.join(__dirname, "public")));
-app.use('/uploads', express.static(path.join(__dirname, "uploads")));
+app.use('/uploads/', express.static(path.join(__dirname, "uploads")));
 
 app.use(
   session({
@@ -45,6 +45,7 @@ app.use("/", require("./routes/dashboard.route")); // <-- Dashboard ke liye
 app.use("/category", require("./routes/category.route"));
 app.use('/subCategory', require("./routes/subCategory.route"));
 app.use('/extraCategory', require("./routes/extraCategory.route"));
+app.use('/product', require('./routes/product.route'));
 
 // server (PORT) start 🚀
 app.listen(PORT, (error) => {

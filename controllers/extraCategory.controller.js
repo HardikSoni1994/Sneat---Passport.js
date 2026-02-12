@@ -22,7 +22,7 @@ const insertExtraCategory = async (req, res) => {
 
         let image = '';
         if (req.file) {
-            image = req.file.path.replace(/\\/g, '/').replace('public/', '');
+            image = req.file.path
             console.log("Image Path:", image);
         }
 

@@ -1,0 +1,85 @@
+<%- include('../layouts/header') %>
+
+<div class="content-wrapper">
+  <div class="container-xxl flex-grow-1 container-p-y">
+    
+    <div class="d-flex justify-content-between align-items-center py-3 mb-4">
+        <h4 class="fw-bold mb-0">View Products</h4>
+        <a href="/product/addProduct" class="btn btn-primary">
+            <i class="bx bx-plus me-1"></i> Add New Product
+        </a>
+    </div>
+
+    <div class="card">
+      <h5 class="card-header">Product List</h5>
+      
+      <div class="table-responsive text-nowrap">
+        <table class="table table-hover">
+          <thead>
+            <tr>
+              <th>#</th>
+              <th>Image</th>
+              <th>Product Name</th>
+              <th>Category</th>
+              <th>Price</th>
+              <th>Stock</th>
+              <th>Remark</th>
+              <th>Action</th>
+            </tr>
+          </thead>
+          <tbody class="table-border-bottom-0">
+            
+            <% products.map((item, index) => { %>
+              <tr>
+                <td><%= index + 1 %></td>
+                
+                <td>
+                    <!-- <img src="/<%= item.product_image %>" width="50" height="50" style="object-fit: contain;" /> -->
+                     <img src="<%= item.product_image %>" width="50" height="50" style="object-fit: contain;" />
+                      <!-- <img src="/uploads/products/<%= item.product_image.split('/').pop().split('\\').pop() %>" width="50" height="50" style="object-fit: contain;" /> -->
+                </td>
+
+                <td>
+                    <strong><%= item.product_name %></strong><br>
+                    <small class="text-muted"><%= item.product_brand %></small>
+                </td>
+                
+                <td>
+                    <span class="badge bg-label-primary me-1"><%= item.category_id ? item.category_id.category_name : 'N/A' %></span><br>
+                    <small><%= item.subCategory_id ? item.subCategory_id.subCategory_name : '' %></small>
+                </td>
+
+                <td>
+                    ₹<%= item.product_price %> 
+                    <% if(item.product_old_price) { %>
+                        <br><small class="text-danger text-decoration-line-through">₹<%= item.product_old_price %></small>
+                    <% } %>
+                </td>
+
+                <td>
+                    <span class="fw-bold"><%= item.product_qty %></span>
+                </td>
+
+                <td>
+                    <% if(item.product_qty > 0) { %>
+                        <span class="badge bg-label-success">In Stock</span>
+                    <% } else { %>
+                        <span class="badge bg-label-danger">Out of Stock</span>
+                    <% } %>
+                </td>
+
+                <td>
+                  <a href="#" class="btn btn-sm btn-outline-info"><i class="bx bx-edit-alt"></i></a>
+                  <a href="#" class="btn btn-sm btn-outline-danger"><i class="bx bx-trash"></i></a>
+                </td>
+              </tr>
+            <% }) %>
+
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+</div>
+
+<%- include('../layouts/footer') %>
