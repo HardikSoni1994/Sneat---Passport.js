@@ -1,5 +1,52 @@
 <%- include('../layouts/header') %>
 
+<style>
+  .modern-btn {
+      display: inline-flex !important;
+      align-items: center;
+      justify-content: center;
+      width: 35px !important;
+      height: 35px !important;
+      padding: 0 !important;
+      border-radius: 8px !important;
+      border: none !important;
+      transition: all 0.3s ease;
+      text-decoration: none !important;
+  }
+
+  /* Icon Size Control */
+  .modern-btn i {
+      font-size: 1.2rem !important;
+      line-height: 0 !important;
+  }
+
+  /* EDIT Button (Light Blue Theme) */
+  .btn-edit {
+      background-color: rgba(105, 108, 255, 0.15) !important;
+      color: #696cff !important;
+  }
+  
+  .btn-edit:hover {
+      background-color: #696cff !important;
+      color: #fff !important;
+      transform: translateY(-3px);
+      box-shadow: 0 4px 8px rgba(105, 108, 255, 0.4);
+  }
+
+  /* DELETE Button (Light Red Theme) */
+  .btn-delete {
+      background-color: rgba(255, 62, 29, 0.15) !important;
+      color: #ff3e1d !important;
+  }
+  
+  .btn-delete:hover {
+      background-color: #ff3e1d !important;
+      color: #fff !important;
+      transform: translateY(-3px);
+      box-shadow: 0 4px 8px rgba(255, 62, 29, 0.4);
+  }
+</style>
+
 <div class="content-wrapper">
   <div class="container-xxl flex-grow-1 container-p-y">
     
@@ -39,11 +86,11 @@
 
                 <td>
                     <strong><%= item.product_name %></strong><br>
-                    <small class="text-muted"><%= item.product_brand %></small>
+                    <small class="badge bg-label-dark text-dark"><%= item.product_brand %></small>
                 </td>
                 
                 <td>
-                    <span class="badge bg-label-primary me-1"><%= item.category_id ? item.category_id.category_name : 'N/A' %></span><br>
+                    <span class="badge bg-primary me-1"><%= item.category_id ? item.category_id.category_name : 'N/A' %></span><br>
                     <small><%= item.subCategory_id ? item.subCategory_id.subCategory_name : '' %></small>
                 </td>
 
@@ -60,15 +107,15 @@
 
                 <td>
                     <% if(item.product_qty > 0) { %>
-                        <span class="badge bg-label-success">In Stock</span>
+                        <span class="badge bg-success text-white">In Stock</span>
                     <% } else { %>
-                        <span class="badge bg-label-danger">Out of Stock</span>
+                        <span class="badge bg-danger text-white">Out of Stock</span>
                     <% } %>
                 </td>
 
                 <td>
-                  <a href="#" class="btn btn-sm btn-outline-info"><i class="bx bx-edit-alt"></i></a>
-                  <a href="#" class="btn btn-sm btn-outline-danger"><i class="bx bx-trash"></i></a>
+                  <a href="/product/editProduct/?id=<%= item._id %>" class="modern-btn btn-edit"><i class="bx bx-edit-alt"></i></a>
+                  <a href="/product/deleteProduct/?id=<%= item._id%>" class="modern-btn btn-delete"><i class="bx bx-trash"></i></a>
                 </td>
               </tr>
             <% }) %>

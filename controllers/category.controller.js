@@ -121,7 +121,7 @@ const updateCategory = async (req, res) => {
         // Database Update
         await Category.findByIdAndUpdate(id, {
             category_name: category_name,
-            category_image: req.file.filename
+            category_image: image
         });
         req.flash('success', `${category_name} Category Updated Successfully !!`);
         return res.redirect('/category/viewCategory');

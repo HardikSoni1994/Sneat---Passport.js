@@ -1,0 +1,144 @@
+<%- include('../layouts/header') %>
+
+<div class="content-wrapper">
+  <div class="container-xxl flex-grow-1 container-p-y">
+    <h4 class="fw-bold py-3 mb-4">Add New Product</h4>
+
+    <div class="row">
+      <div class="col-xl">
+        <div class="card mb-4">
+          <div class="card-header d-flex justify-content-between align-items-center">
+            <h5 class="mb-0">Product Details</h5>
+            <a href="/product/viewProduct" class="btn btn-secondary">Back</a>
+          </div>
+          <div class="card-body">
+            
+            <form action="/product/updateProduct" method="POST" enctype="multipart/form-data">
+                <input type="hidden" name="id" value="<%= product._id %>" />
+              
+              <div class="row mb-3">
+                <div class="col-md-4">
+                    <label class="form-label">Select Category</label>
+                    <select name="category_id" id="category" class="form-select" onchange="categoryChange()" required>
+    <option value="">-- Select Category --</option>
+    <% categories.map((cat) => { %>
+        <option value="<%= cat._id %>" <% if(String(product.category_id) === String(cat._id)) { %> selected <% } %>>
+            <%= cat.category_name %>
+        </option>
+    <% }) %>
+</select>
+                </div>
+
+                <div class="col-md-4">
+                    <label class="form-label">Select Sub Category</label>
+                    <select name="subCategory_id" id="subCategory" class="form-select" onchange="subCategoryChange()">
+    <option value="">-- Select Sub Category --</option>
+    <% subCategories.map((sub) => { %>
+        <% if(String(product.category_id) === String(sub.category_id)) { %>
+            <option value="<%= sub._id %>" <% if(String(product.subCategory_id) === String(sub._id)) { %> selected <% } %>>
+                <%= sub.subCategory_name %>
+            </option>
+        <% } %>
+    <% }) %>
+</select>
+                </div>
+
+                <div class="col-md-4">
+                    <label class="form-label">Select Extra Category</label>
+                   <select name="extraCategory_id" id="extraCategory" class="form-select">
+    <option value="">-- Select Extra Category --</option>
+    <% extraCategories.map((extra) => { %>
+        <% if(String(product.subCategory_id) === String(extra.subCategory_id)) { %>
+            <option value="<%= extra._id %>" <% if(String(product.extraCategory_id) === String(extra._id)) { %> selected <% } %>>
+                <%= extra.extraCategory_name %>
+            </option>
+        <% } %>
+    <% }) %>
+</select>
+                </div>
+              </div>
+
+              <div class="row mb-3">
+                  <div class="col-md-6">
+                      <label class="form-label">Product Name</label>
+                      <input type="text" name="product_name" class="form-control" value="<%= product.product_name %>" placeholder="Ex: Nike Air Max" required />
+                  </div>
+                  <div class="col-md-6">
+                      <label class="form-label">Brand Name (Optional)</label>
+                      <input type="text" name="product_brand" class="form-control" value="<%= product.product_brand %>" />
+                  </div>
+              </div>
+
+              <div class="row mb-3">
+                  <div class="col-md-4">
+                      <label class="form-label">Price (Selling Price)</label>
+                      <input type="number" name="product_price" class="form-control" value="<%= product.product_price %>" placeholder="Ex: 4999" required />
+                  </div>
+                  <div class="col-md-4">
+                      <label class="form-label">Old Price (MRP)</label>
+                      <input type="number" name="product_old_price" class="form-control" value="<%= product.product_price %>" placeholder="Ex: 7999" />
+                  </div>
+                  <div class="col-md-4">
+                      <label class="form-label">Quantity (Stock)</label>
+                      <input type="number" name="product_qty" class="form-control" value="<%= product.product_qty %>" required />
+                  </div>
+              </div>
+
+              <div class="mb-3">
+                  <label class="form-label">Product Description</label>
+                  <textarea name="product_desc" class="form-control" rows="3" placeholder="Enter product details..." required><%= product.product_desc %></textarea>
+              </div>
+
+              <div class="mb-3">
+                  <label class="form-label">Product Image</label>
+                    <img src="<%= product.product_image %>" width="80" class="mb-2" style="border-radius: 5px; object-fit: contain;" />
+                  <input type="file" name="product_image" class="form-control" />
+              </div>
+
+              <button type="submit" class="btn btn-warning">Update Product</button>
+            </form>
+            </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<%- include('../layouts/footer') %>
+
+<script>
+    const allSubCategories = <%- JSON.stringify(subCategories) %>;
+    const allExtraCategories = <%- JSON.stringify(extraCategories) %>;
+
+    function categoryChange() {
+        const catId = document.getElementById("category").value;
+        const subCatSelect = document.getElementById("subCategory");
+        
+        const filteredSub = allSubCategories.filter((item) => {
+             return item.category_id == catId || item.category_id._id == catId;
+        });
+
+        let clutter = '<option value="">-- Select Sub Category --</option>';
+        filteredSub.map((item) => {
+            clutter += `<option value="${item._id}">${item.subCategory_name}</option>`;
+        });
+        subCatSelect.innerHTML = clutter;
+
+        document.getElementById("extraCategory").innerHTML = '<option value="">-- Select Extra Category --</option>';
+    }
+
+    function subCategoryChange() {
+        const subCatId = document.getElementById("subCategory").value;
+        const extraCatSelect = document.getElementById("extraCategory");
+
+        const filteredExtra = allExtraCategories.filter((item) => {
+            return item.subCategory_id == subCatId || item.subCategory_id._id == subCatId;
+        });
+
+        let extraCategoryOption = '<option value="">-- Select Extra Category --</option>';
+        filteredExtra.map((item) => {
+            extraCategoryOption += `<option value="${item._id}">${item.extraCategory_name}</option>`;
+        });
+        extraCatSelect.innerHTML = extraCategoryOption;
+    }
+</script>
