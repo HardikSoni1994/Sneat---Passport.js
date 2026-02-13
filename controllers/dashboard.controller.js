@@ -350,7 +350,7 @@ const updateMyProfile = async (req, res) => {
 
         if (!oldData) {
             console.log("Admin profile not found");
-            return res.redirect('back');
+            return res.redirect('/my-profile');
         }
 
         let image = oldData.image;
@@ -386,7 +386,7 @@ const updateMyProfile = async (req, res) => {
         }
 
         req.flash('success', "Profile Updated Successfully !!");
-        return res.redirect('back');
+        return res.redirect('/dashboard');
         
     } catch (error) {
         console.log(error);
