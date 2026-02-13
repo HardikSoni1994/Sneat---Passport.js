@@ -1,6 +1,9 @@
 const Category = require('../models/category.model');
 const subCategory = require('../models/subCategory.model');
 const extraCategory = require('../models/extraCategory.model');
+const product = require('../models/product.model');
+const fs = require('fs');
+const path = require('path');
 
 // Add Extra Category page
 const addExtraCategoryPage = async(req, res) => {
@@ -30,7 +33,7 @@ const insertExtraCategory = async (req, res) => {
             category_id: category_id,
             subCategory_id: subCategory_id,
             extraCategory_name: extraCategory_name,
-            extraCategory_image: image
+            extraCategory_image: req.file.filename
         });
 
         req.flash('success', "Extra Category Added Successfully!");
@@ -72,9 +75,10 @@ const deleteExtraCategory = async (req, res) => {
         const oldData = await extraCategory.findById(id);
         
         await extraCategory.findByIdAndDelete(id);
+        await product.deleteMany({ extraCategory_id: id });
         
         req.flash('success', `${oldData.extraCategory_name} Deleted Successfully!`);
-        return res.redirect('back');
+        return res.redirect('/extraCategory/viewExtraCategory');
     } catch (error) {
         console.log(error);
         return res.redirect('back');
@@ -106,14 +110,41 @@ const updateExtraCategory = async (req, res) => {
     try {
         const { id, category_id, subCategory_id, extraCategory_name } = req.body;
 
-        await extraCategory.findByIdAndUpdate(id, { category_id, subCategory_id, extraCategory_name });
+        let updateData = {
+            category_id: category_id,
+            subCategory_id: subCategory_id,
+            extraCategory_name: extraCategory_name
+        };
 
-        req.flash('success', `${extraCategory_name} Updated Successfully!`);
+        if (req.file) {
+            const oldData = await extraCategory.findById(id);
+
+            if (oldData && oldData.extraCategory_image) {
+                const oldImagePath = path.join(__dirname, '../public/uploads/extraCategories', oldData.extraCategory_image);
+
+                // Yahan asynchronous fs.unlink use kiya hai, bina server block kiye
+                fs.unlink(oldImagePath, (err) => {
+                    if (err) {
+                        console.log("Old image delete karne me error:", err);
+                    } else {
+                        console.log("Old image deleted successfully.");
+                    }
+                });
+            }
+
+            updateData.extraCategory_image = req.file.filename;
+        }
+
+        await extraCategory.findByIdAndUpdate(id, updateData);
+
+        req.flash('success', 'Extra Category updated successfully!');
         return res.redirect('/extraCategory/viewExtraCategory');
+
     } catch (error) {
-        console.log(error);
-        return res.redirect('back');
+        console.log("Update Error:", error);
+        req.flash('error', 'Something went wrong during update');
+        return res.redirect('/extraCategory/viewExtraCategory');
     }
-}
+};
 
 module.exports = { addExtraCategoryPage, insertExtraCategory, viewExtraCategoryPage, deleteExtraCategory, editExtraCategory, updateExtraCategory };

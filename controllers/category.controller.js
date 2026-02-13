@@ -1,4 +1,7 @@
 const Category = require ('../models/category.model');
+const subCategory = require('../models/subCategory.model');
+const extraCategory = require('../models/extraCategory.model');
+const product = require('../models/product.model');
 const fs = require('fs');
 const path = require('path');
 
@@ -53,6 +56,9 @@ const deleteCategory = async (req, res) => {
         const data = await Category.findById(id);
 
         await Category.findByIdAndDelete(id);
+        await subCategory.deleteMany({ category_id: id });
+        await extraCategory.deleteMany({ category_id: id });
+        await product.deleteMany({ category_id: id });
 
         req.flash('success', `${data.category_name} Category Deleted Successfully !!`);
         return res.redirect('/category/viewCategory');

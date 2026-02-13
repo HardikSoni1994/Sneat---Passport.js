@@ -1,5 +1,9 @@
 const Category = require('../models/category.model');
 const subCategory = require('../models/subCategory.model');
+const extraCategory = require('../models/extraCategory.model');
+const product = require('../models/product.model');
+const fs = require('fs');
+const path = require('path');
 
 // Add Subcategory Page
 const addSubCategoryPage = async (req, res) => {
@@ -61,6 +65,8 @@ const deleteSubCategory = async (req, res) => {
         const singleSubCat = await subCategory.findById(id);
 
         await subCategory.findByIdAndDelete(id);
+        await extraCategory.deleteMany({ subCategory_id: id });
+        await product.deleteMany({ subCategory_id: id });
 
         req.flash('success', `${singleSubCat.subCategory_name} Deleted Successfully!`);
         return res.redirect('/subCategory/viewSubCategory');

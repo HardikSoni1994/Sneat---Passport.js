@@ -13,7 +13,7 @@
           </div>
           <div class="card-body">
             
-            <form action="/extraCategory/updateExtraCategory" method="POST">
+            <form action="/extraCategory/updateExtraCategory" method="POST" enctype="multipart/form-data">
                 <input type="hidden" name="id" value="<%= singleData._id %>" />
 
               <div class="mb-3">
@@ -45,6 +45,13 @@
               <div class="mb-3">
                 <label class="form-label">Extra Category Name</label>
                 <input type="text" name="extraCategory_name" class="form-control" value="<%= singleData.extraCategory_name %>" required />
+              </div>
+              <div class="mb-3">
+                <label class="form-label">Extra Category Image</label>
+                <br>
+                <img src="/uploads/extraCategories/<%= singleData.extraCategory_image %>" width="100" class="mb-2" alt="old-img">
+                
+                <input type="file" class="form-control" name="extraCategory_image" />
               </div>
 
               <button type="submit" class="btn btn-warning">Update Extra Category</button>
