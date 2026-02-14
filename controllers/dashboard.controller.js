@@ -1,12 +1,44 @@
 const Admin = require('../models/admin.model');
 const User = require('../models/user.model');
+const Category = require('../models/category.model');
+const subCategory = require('../models/subCategory.model');
+const extraCategory = require('../models/extraCategory.model');
+const product = require('../models/product.model');
 const fs = require('fs');
 const path = require('path');
 
 
 // dashboardPage step-6
-const dashboardPage = (req, res) => {
-    res.render('dashboard/index', { page: 'dashboard' });
+const dashboardPage = async (req, res) => {
+    try {
+        // 1. Data base se sabki total ginti nikalo
+        const categoryCount = await Category.countDocuments();
+        const subCategoryCount = await subCategory.countDocuments();
+        const extraCategoryCount = await extraCategory.countDocuments();
+        const productCount = await product.countDocuments();
+
+        const recentProducts = await product.find({}).sort({ _id: -1 }).limit(5);
+
+        res.render('dashboard/index', { 
+            page: 'dashboard',
+            categoryCount: categoryCount,
+            subCategoryCount: subCategoryCount,
+            extraCategoryCount: extraCategoryCount,
+            productCount: productCount,
+            recentProducts: recentProducts
+        });
+        
+    } catch (error) {
+        console.log("Dashboard Error:", error);
+        res.render('dashboard/index', { 
+            page: 'dashboard',
+            categoryCount: 0, 
+            subCategoryCount: 0, 
+            extraCategoryCount: 0, 
+            productCount: 0,
+            recentProducts: [] 
+        }); 
+    }
 };
 
 // Admin page
