@@ -103,7 +103,7 @@
           </thead>
           <tbody class="table-border-bottom-0">
             
-            <% extraCategories.map((item, index) => { %>
+            <!-- <% extraCategories.map((item, index) => { %>
               <tr>
                 <td><%= index + 1 %></td>
                 
@@ -125,7 +125,45 @@
                   </a>
                 </td>
               </tr>
-            <% }) %>
+            <% }) %> -->
+                <% if (extraCategories && extraCategories.length > 0) { %>
+    
+                <% extraCategories.forEach((item, index) => { %>
+      <tr>
+        <td><%= index + 1 %></td>
+
+         <td><%= item.category_id ? item.category_id.category_name : 'No Category' %></td>
+                <td><%= item.subCategory_id ? item.subCategory_id.subCategory_name : 'No SubCategory' %></td>
+
+        <td><strong><%= item.extraCategory_name %></strong></td>
+
+        <td>
+          <div class="extracategory-img-wrapper">
+            <img src="/uploads/extraCategories/<%= item.extraCategory_image %>" alt="Extra Category Image" />
+          </div>
+        </td>
+
+        <td>
+          <a href="/extraCategory/editExtraCategory/<%= item._id %>" class="modern-btn btn-edit">
+            <i class="bx bx-edit-alt"></i>
+          </a>
+          <a href="/extraCategory/deleteExtraCategory/<%= item._id %>" class="modern-btn btn-delete">
+            <i class="bx bx-trash"></i>
+          </a>
+        </td>
+      </tr>
+    <% }) %>
+
+  <% } else { %>
+    
+    <tr>
+      <td colspan="6" class="text-center py-5">
+        <i class="bx bx-list-plus text-muted mb-3" style="font-size: 4rem; opacity: 0.5;"></i>
+        <h5 class="fw-bold text-muted">No Extra Categories Found!</h5>
+      </td>
+    </tr>
+
+  <% } %>
 
           </tbody>
         </table>

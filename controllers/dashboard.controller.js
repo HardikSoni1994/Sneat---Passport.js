@@ -17,7 +17,7 @@ const dashboardPage = async (req, res) => {
         const extraCategoryCount = await extraCategory.countDocuments();
         const productCount = await product.countDocuments();
 
-        const recentProducts = await product.find({}).sort({ _id: -1 }).limit(5);
+        const recentProducts = await product.find({}).populate('category_id').sort({ _id: -1 }).limit(5);
 
         res.render('dashboard/index', { 
             page: 'dashboard',
